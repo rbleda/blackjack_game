@@ -6,7 +6,13 @@ export const generateShuffledDeck = () : ICard[] => {
     const cardArray : Array<ICard> = [];
     const cards = Array.from(getCards().keys());
     Object.values(CardColor).forEach((color) => {
-        Object.values(SUIT).forEach((suit) => {
+        let suits;
+        if (color === CardColor.RED) {
+            suits = [SUIT.DIAMOND, SUIT.HEART];
+        } else {
+            suits = [SUIT.CLUB, SUIT.SPADE];
+        }
+        suits.forEach((suit) => {
             cards.forEach((value: string | number) => {
                 const theCard = {value, suit, color};
                 cardArray.push(theCard);
