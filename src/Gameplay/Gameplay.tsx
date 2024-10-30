@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import ICard from "../Card/ICard";
 import { generateShuffledDeck } from "./DeckUtils";
-import Card from "../Card/Card";
+import Gameboard from "../GameBoard/Gameboard"
 
 interface GameplayProps {
     playerName: string
@@ -26,8 +26,6 @@ const Gameplay = (props: GameplayProps) => {
                 } else {
                     toBePlayerCards.push(card);
                 }
-    
-                initialShuffledDeck.filter((c) => !(c.value === card.value && c.suit === card.suit));
             } else {
                 throw Error("Card is unable to be dealt");
             }
@@ -39,25 +37,30 @@ const Gameplay = (props: GameplayProps) => {
         setActiveDeck(initialShuffledDeck);
     }, []);
 
+    const dealCard = () => {
+        // Wasn't working fix it
+        const cardToDeal = activeDeck.pop();
+        if (cardToDeal) {
+            setPlayerCards([...playerCards, cardToDeal]);
+        }
+    }
+
+    const stand = (player: string) => {
+        // if (player === "dealer") {
+        //     let deck = activeDeck;
+        //     const cardToDeal = deck.pop();
+        // }
+    }
+
     return (
         <>
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                {activeDeck.map((c) => (
-                <Card key={`${c.color}-${c.suit}-${c.value}`} value={c.value} suit={c.suit} color={c.color} />
-                ))}
-            </div>
-            <h1>{props.playerName}'s Cards: </h1>
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                {playerCards.map((c) => (
-                <Card key={`${c.color}-${c.suit}-${c.value}`} value={c.value} suit={c.suit} color={c.color} />
-                ))}
-            </div>
-            <h1>Dealer's Cards: </h1>
-            <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                {dealerCards.map((c) => (
-                <Card key={`${c.color}-${c.suit}-${c.value}`} value={c.value} suit={c.suit} color={c.color} />
-                ))}
-            </div>
+            <Gameboard 
+                playerName={props.playerName}
+                playerCards={playerCards}
+                dealerCards={dealerCards}
+                onHit={dealCard}
+                onStand={stand}
+            />
         </>
       );
 }

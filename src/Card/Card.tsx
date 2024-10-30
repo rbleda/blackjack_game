@@ -5,6 +5,7 @@ interface CardProperties {
     value: number | string
     suit: SUIT
     color: CardColor
+    blankcard?: boolean
 }
 
 const Card = (props: CardProperties) => {
@@ -27,26 +28,36 @@ const Card = (props: CardProperties) => {
         border: '1px solid black',
         borderRadius: '10px',
         padding: '20px',
-        width: '120px',
-        height: '180px',
+        width: '30px',
+        height: '60px',
         position: 'relative',
         backgroundColor: 'white', 
         margin: '5px'
     };
 
-    return (
-        <div style={cardStyle}>
-            <p style={{ position: 'absolute', top: '10px', left: '10px', margin: 0 }}>
-                {props.value}
-            </p>
-            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                {drawSuit(props.suit, props.color)}
+    if (props?.blankcard) {
+        return (
+            <div style={cardStyle}>
+                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                    ?
+                </div>
             </div>
-            <p style={{ position: 'absolute', bottom: '10px', right: '10px', margin: 0 }}>
-                {props.value}
-            </p>
-        </div>
-    );
+        );
+    } else {
+        return (
+            <div style={cardStyle}>
+                <p style={{ position: 'absolute', top: '10px', left: '10px', margin: 0 }}>
+                    {props.value}
+                </p>
+                <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                    {drawSuit(props.suit, props.color)}
+                </div>
+                <p style={{ position: 'absolute', bottom: '10px', right: '10px', margin: 0 }}>
+                    {props.value}
+                </p>
+            </div>
+        );
+    }
 };
 
 export default Card;
