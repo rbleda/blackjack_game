@@ -1,9 +1,12 @@
 import Gameplay from './Gameplay/Gameplay';
+import { WebSocketProvider } from './ws-server/WebSocketContext';
 
 function App() {
   
   return (
-    <Gameplay playerName={'Rai Bleda'} initialMoney={1000} />
+    <WebSocketProvider>
+      <Gameplay/>
+    </WebSocketProvider>
   );
 }
 
