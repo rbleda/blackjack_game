@@ -1,30 +1,46 @@
-import { useEffect, useState } from "react"
-import ICard from "../Card/ICard";
-import { generateShuffledDeck } from "./DeckUtils";
-import Card from "../Card/Card";
+import React, { useEffect, useState } from 'react';
+import { useGameState } from '../ws-server/WebSocketContext';
+import PlayerBox from '../PlayerBox/PlayerBox';
+import GameBoard from '../Board/GameBoard';
 
-interface GameplayProps {
-    playerName: string
-    initialMoney: number
-}
+import "./Gameplay.css";
+import ICard from '../Card/ICard';
 
-const Gameplay = (props: GameplayProps) => {
-    // const [playerWallet, setPlayerWallet] = useState<number>(props.initialMoney);
-    // const [playerCards, setPlayerCards] = useState<Array<ICard>>([]);
-    // const [dealerCards, setDealerCards] = useState<Array<ICard>>([]);
-    const [activeDeck, setActiveDeck] = useState<Array<ICard>>([]);
+const Gameplay: React.FC = () => {
+  const { gameState, sendMessage } = useGameState();
 
-    useEffect(() => {
-        setActiveDeck(generateShuffledDeck());
-    }, []);
+  const handleHit = () => {
+    sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
+  };
 
-    return (
-        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-            {activeDeck.map((c) => (
-              <Card key={`${c.color}-${c.suit}-${c.value}`} value={c.value} suit={c.suit} color={c.color} />
-            ))}
+  const handleStand = () => {
+    sendMessage(JSON.stringify({ action: 'STAND_PLAYER' }));
+  };
+
+  if (!gameState) return <div style={{fontSize: '10vh', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}>Loading...</div>;
+
+  return (
+    <div>
+      {gameState && (
+        <div className="game-setup">
+          <PlayerBox 
+            userName={gameState.dealer.userName} 
+            hand={gameState.dealer.hand}
+            backgroundColor='red'
+          />
+          <GameBoard 
+            handleHit={handleHit}
+            handleStand={handleStand}
+          />
+          <PlayerBox 
+            userName={gameState.player.userName} 
+            hand={gameState.player.hand}
+            backgroundColor='lightblue'
+          />
         </div>
-      );
-}
+      )}
+    </div>
+  );
+};
 
-export default Gameplay
+export default Gameplay;

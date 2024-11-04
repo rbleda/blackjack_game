@@ -1,0 +1,41 @@
+.game-board-table {
+    width: 75vw; /* Width of the table as a percentage of the viewport width */
+    height: 60vh; /* Height of the table as a percentage of the viewport height */
+    background-color: green; /* Green color for the blackjack board */
+    border: 7px solid black; /* Black border for the board */
+    border-radius: 50%; /* Oval shape */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center elements vertically */
+    align-items: center; /* Center elements horizontally */
+    margin: 0 auto; /* Center the board horizontally on the screen */
+    position: relative; /* Control over inner elements */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+  
+.game-board-content {
+    display: flex; /* Align elements (title, buttons) in a row */
+    flex-direction: row;
+    justify-content: center; /* Center them horizontally */
+    align-items: center; /* Align them vertically */
+    gap: 15px; /* Add some space between the elements */
+}
+
+.game-board-title {
+    color: black; /* Title text color */
+    font-size: 40px; /* Adjust font size */
+    margin-bottom: 10px; /* Space below the title */
+}
+
+.game-board-button {
+    padding: 10px 20px; /* Space inside the button */
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px; /* Slightly rounded corners */
+    cursor: pointer; /* Changes cursor to pointer when hovering */
+}
+
+.game-board-button:hover {
+    background-color: darkgray; /* Change color on hover */
+}

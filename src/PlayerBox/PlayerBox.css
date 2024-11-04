@@ -1,0 +1,26 @@
+.player-box-container {
+    display: flex;
+    flex-direction: row; /* Align items in a row */
+    gap: 5px; /* Add 5px gap between items */
+}
+
+.player-icon {
+    width: 100px; /* Set the width of the circle */
+    height: 100px; /* Set the height of the circle */
+    border: 4px solid black; /* Black border */
+    border-radius: 50%; /* Make the div a circle */
+    display: flex; /* Use flexbox to align text */
+    justify-content: center; /* Horizontally center the text */
+    align-items: center; /* Vertically center the text */
+    color: black; /* Text color */
+    text-align: center; /* Center text inside if multiline */
+    font-size: 18px; /* Adjust font size as needed */
+}
+
+.player-cards-container {
+    display: flex;
+    flex-wrap: wrap; /* Allows the cards to wrap into new rows */
+    gap: 10px; /* Adds space between the cards */
+    justify-content: center; /* Centers the cards horizontally */
+    max-width: 300px; /* Adjust this to control the width of the container */
+  }

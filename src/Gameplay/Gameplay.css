@@ -1,0 +1,17 @@
+/* Background color for the entire screen */
+body {
+    background-color: #282c34; /* Dark background for a nicer look */
+    margin: 0;
+    display: flex;
+    justify-content: center; /* Center the entire game setup horizontally */
+    align-items: center; /* Center the entire game setup vertically */
+    height: 100vh; /* Make sure the body takes up the full height of the screen */
+}
+
+.game-setup {
+    display: flex;
+    flex-direction: column; /* Stack the elements vertically */
+    justify-content: center; /* Center the content vertically */
+    align-items: center; /* Center the content horizontally */
+    gap: 20px; /* Add space between the elements */
+}
