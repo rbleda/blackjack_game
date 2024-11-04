@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGameState } from '../ws-server/WebSocketContext';
-import Card from '../Card/Card';
+import PlayerBox from '../PlayerBox/PlayerBox';
+import GameBoard from '../Board/GameBoard';
+
+import "./Gameplay.css";
+import ICard from '../Card/ICard';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage } = useGameState();
@@ -18,33 +22,23 @@ const Gameplay: React.FC = () => {
   return (
     <div>
       {gameState && (
-        <>
-          <h2>Player: {gameState.player.userName}</h2>
-          <div>
-            {gameState.player.hand.map((c) => (
-                        <Card 
-                        key={`${c.color}-${c.suit}-${c.value}`} 
-                        value={c.value} 
-                        suit={JSON.parse(c.suit)} 
-                        color={JSON.parse(c.color)} 
-                        blankcard={false}/>
-            ))}
-          </div>
-          <h2>Dealer: {gameState.dealer.userName}</h2>
-          <div>
-            {gameState.dealer.hand.map((c) => (
-                        <Card 
-                        key={`${c.color}-${c.suit}-${c.value}`} 
-                        value={c.value} 
-                        suit={JSON.parse(c.suit)} 
-                        color={JSON.parse(c.color)} 
-                        blankcard={false}/>
-            ))}
-          </div>
-        </>
+        <div className="game-setup">
+          <PlayerBox 
+            userName={gameState.dealer.userName} 
+            hand={gameState.dealer.hand}
+            backgroundColor='red'
+          />
+          <GameBoard 
+            handleHit={handleHit}
+            handleStand={handleStand}
+          />
+          <PlayerBox 
+            userName={gameState.player.userName} 
+            hand={gameState.player.hand}
+            backgroundColor='lightblue'
+          />
+        </div>
       )}
-      <button onClick={handleHit}>Hit</button>
-      <button onClick={handleStand}>Stand</button>
     </div>
   );
 };

@@ -12,7 +12,7 @@ interface GameState {
       hand: ICard[];
     };
     playerTurn: boolean;
-  }
+}
 
 interface WebSocketContextType {
     gameState: GameState | null;
@@ -37,7 +37,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
   
       ws.onmessage = (event) => {
         const { type, state } = JSON.parse(event.data);
-        if (type === 'INITIAL_STATE' || type === 'UPDATED_GAME') {
+        if (type === 'GAME_STATE') {
           setGameState(JSON.parse(state));
         }
       };
