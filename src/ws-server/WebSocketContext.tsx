@@ -28,26 +28,57 @@ interface WebSocketProviderProps {
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
     const [gameState, setGameState] = useState<GameState | null>(null);
     const [socket, setSocket] = useState<WebSocket | null>(null);
+
+    // Utility function to create a delay (promisified setTimeout)
+    const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
   
     useEffect(() => {
-      const ws = new WebSocket('ws://localhost:7070');
-      setSocket(ws);
-  
-      ws.onopen = () => console.log('Connected to WebSocket');
-  
-      ws.onmessage = (event) => {
-        const { type, state } = JSON.parse(event.data);
-        if (type === 'GAME_STATE') {
-          setGameState(JSON.parse(state));
-        }
-      };
-  
-      ws.onclose = () => console.log('WebSocket connection closed');
-  
-      return () => {
-        ws.close();
-      };
+      trySocketConnection();
     }, []);
+
+    useEffect(() => {
+      if (socket != null){
+        setSocketRoutines();
+      }
+    }, [socket]);
+
+    function setSocketRoutines() {
+      if (socket != null) {
+        socket.onmessage = (event) => {
+          const { type, state } = JSON.parse(event.data);
+          if (type === 'GAME_STATE') {
+            setGameState(JSON.parse(state));
+          }
+        };
+      }
+    }
+
+    const trySocketConnection = async () => {
+      try {
+        const ws = new WebSocket('ws://localhost:7070');
+
+        ws.onopen = () => {
+          console.log('Connected to WebSocket');
+          setSocket(ws); // Save the WebSocket instance when connected
+        };
+
+        ws.onerror = (error) => {
+          console.error('WebSocket error', error);
+          ws.close(); // Make sure to close the socket if there's an error
+        };
+
+        ws.onclose = async () => {
+          console.log('WebSocket connection closed, retrying in 2 seconds...');
+          await delay(2000); // Wait for 2 seconds before retrying
+          trySocketConnection(); // Retry connection
+        };
+    
+      } catch (e) {
+        // This block won't catch WebSocket connection errors
+        console.log('Unexpected error occurred', e);
+      }
+    };
+    
   
     const sendMessage = useCallback(
       (message: string) => {

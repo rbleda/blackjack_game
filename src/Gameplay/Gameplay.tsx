@@ -4,7 +4,6 @@ import PlayerBox from '../PlayerBox/PlayerBox';
 import GameBoard from '../Board/GameBoard';
 
 import "./Gameplay.css";
-import ICard from '../Card/ICard';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage } = useGameState();
