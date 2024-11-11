@@ -48,6 +48,8 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
           const { type, state } = JSON.parse(event.data);
           if (type === 'GAME_STATE') {
             setGameState(JSON.parse(state));
+          } else if (type === 'FINAL_STATE') {
+            // Do something I don't know
           }
         };
       }

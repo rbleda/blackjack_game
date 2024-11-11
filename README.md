@@ -2,6 +2,9 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+There are a couple libraries that are important to have on the server to run this app. 
+- Everything is installed with yarn
+
 ## Available Scripts
 
 In the project directory, you can run:

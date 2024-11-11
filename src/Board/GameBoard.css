@@ -36,6 +36,15 @@
     cursor: pointer; /* Changes cursor to pointer when hovering */
 }
 
+.game-board-button:disabled {
+    background-color: darkgray; /* Example of changing color for disabled state */
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+}
+
 .game-board-button:hover {
-    background-color: darkgray; /* Change color on hover */
+    background-color: darkgreen; /* Change color on hover */
+}
+
+.game-board-button:hover:disabled {
+    background-color: darkgray;
 }
