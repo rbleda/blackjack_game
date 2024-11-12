@@ -43,13 +43,16 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     }, [socket]);
 
     function setSocketRoutines() {
-      if (socket != null) {
+      if (socket !== null) {
         socket.onmessage = (event) => {
           const { type, state } = JSON.parse(event.data);
           if (type === 'GAME_STATE') {
+            console.log("New game state:", JSON.parse(state));
             setGameState(JSON.parse(state));
           } else if (type === 'FINAL_STATE') {
             // Do something I don't know
+            console.log("New final game state:", JSON.parse(state));
+            setGameState(JSON.parse(state));
           }
         };
       }

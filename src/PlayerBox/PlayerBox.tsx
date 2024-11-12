@@ -20,9 +20,9 @@ const PlayerBox = (props: Props) => {
     }, [props.hand]);
 
     useEffect(() => {
-        if (props.playerTurn && props.userName != "Dealer") {
+        if (props.playerTurn && props.userName !== "Dealer") {
             setTurnStyling('gold');
-        } else if (!props.playerTurn && props.userName != "Dealer") {
+        } else if (!props.playerTurn && props.userName !== "Dealer") {
             setTurnStyling('black');
         } else if (!props.playerTurn && props.userName === "Dealer") {
             setTurnStyling('gold');
@@ -36,7 +36,8 @@ const PlayerBox = (props: Props) => {
             backgroundColor: props.backgroundColor,
             borderColor: color
         }
-            setIconStyling(newStyling);
+
+        setIconStyling(newStyling);
     }
 
     return (
