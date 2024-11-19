@@ -8,7 +8,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import "./Gameplay.css";
 
 const Gameplay: React.FC = () => {
-  const { gameState, sendMessage } = useGameState();
+  const { gameState, sendMessage, gameOutcome } = useGameState();
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -41,6 +41,7 @@ const Gameplay: React.FC = () => {
             handleHit={handleHit}
             handleStand={handleStand}
             disableButtons={!gameState.playerTurn}
+            gameOutcome={gameOutcome}
           />
           <PlayerBox 
             userName={gameState.player.userName} 

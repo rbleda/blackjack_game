@@ -1,0 +1,8 @@
+export enum GameResult {
+    FINAL = "FINAL_STATE",
+    NORMAL = "GAME_STATE",
+    PLAYER_BJ = "PLAYER_BJ",
+    DEALER_BJ = "DEALER_BJ",
+    PLAYER_BUST = "PLAYER_BUST",
+    DEALER_BUST = "DEALER_BUST"
+}

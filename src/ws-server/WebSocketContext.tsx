@@ -1,5 +1,7 @@
 import { createContext, ReactNode, useCallback, useContext, useEffect, useState } from "react";
 import ICard from "../Card/ICard";
+import { GameResult } from "../Board/GameResult";
+import { GameOutcome } from "../Board/GameOutcome";
 
 
 interface GameState {
@@ -17,6 +19,7 @@ interface GameState {
 interface WebSocketContextType {
     gameState: GameState | null;
     sendMessage: (message: string) => void;
+    gameOutcome: GameOutcome | null; 
 }
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
@@ -28,6 +31,8 @@ interface WebSocketProviderProps {
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
     const [gameState, setGameState] = useState<GameState | null>(null);
     const [socket, setSocket] = useState<WebSocket | null>(null);
+    const [finalGameState, setFinalGameState] = useState<boolean>(false);
+    const [gameOutcome, setGameOutcome] = useState<GameOutcome | null>(null);
 
     // Utility function to create a delay (promisified setTimeout)
     const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -42,17 +47,40 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
       }
     }, [socket]);
 
+    useEffect(() => {
+      if (finalGameState && gameState != null) {
+
+      }
+    }, [finalGameState])
+
     function setSocketRoutines() {
       if (socket !== null) {
         socket.onmessage = (event) => {
           const { type, state } = JSON.parse(event.data);
-          if (type === 'GAME_STATE') {
-            console.log("New game state:", JSON.parse(state));
-            setGameState(JSON.parse(state));
-          } else if (type === 'FINAL_STATE') {
-            // Do something I don't know
-            console.log("New final game state:", JSON.parse(state));
-            setGameState(JSON.parse(state));
+          setGameState(JSON.parse(state));
+          switch (type) {
+            case GameResult.NORMAL:
+              console.log("New game state:", JSON.parse(state));
+              break;
+            case GameResult.FINAL:
+              // Do something I don't know
+              console.log("New final game state:", JSON.parse(state));
+              setFinalGameState(true);
+              break;
+            case GameResult.PLAYER_BJ:
+              setGameOutcome(GameOutcome.PLAYER_BJ);
+              break;
+            case GameResult.PLAYER_BUST:
+              setGameOutcome(GameOutcome.PLAYER_LOSES);
+              break;
+            case GameResult.DEALER_BJ:
+              setGameOutcome(GameOutcome.PLAYER_LOSES);
+              break;
+            case GameResult.DEALER_BUST:
+              setGameOutcome(GameOutcome.PLAYER_WINS);
+              break;
+            default:
+              break;
           }
         };
       }
@@ -97,7 +125,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     );
   
     return (
-      <WebSocketContext.Provider value={{ gameState, sendMessage }}>
+      <WebSocketContext.Provider value={{ gameState, sendMessage, gameOutcome }}>
         {children}
       </WebSocketContext.Provider>
     );
