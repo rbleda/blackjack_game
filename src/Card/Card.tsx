@@ -1,27 +1,25 @@
-import { CardColor } from "./CardColor"
 import { SUIT } from "./Suits"
 
 interface CardProperties {
     value: number | string
     suit: SUIT
-    color: CardColor
     blankcard?: boolean
 }
 
 const Card = (props: CardProperties) => {
-    const drawSuit = (suit : SUIT, color : CardColor) : JSX.Element => {
-        switch(suit) {
+    const drawSuit = (suit : SUIT) : JSX.Element => {
+        switch (suit) {
             case SUIT.CLUB:
-                return  <p style={{ fontSize: '50px', color: color}}>♣️</p>
+                return <span style={{ fontSize: '50px', color: 'black', lineHeight: '1' }}>♣</span>;
             case SUIT.SPADE:
-                return  <p style={{ fontSize: '50px', color: color}}>♠</p>
+                return <span style={{ fontSize: '50px', color: 'black', lineHeight: '1' }}>♠</span>;
             case SUIT.HEART:
-                return <p style={{ fontSize: '50px', color: color}}>♥️</p>
+                return <span style={{ fontSize: '50px', color: 'red', lineHeight: '1' }}>♥</span>;
             case SUIT.DIAMOND:
-                return <p style={{ fontSize: '50px', color: color}}>♦️</p>
+                return <span style={{ fontSize: '50px', color: 'red', lineHeight: '1' }}>♦</span>;
             default:
-                return <p style={{ fontSize: '50px', color: color}}>N/A</p>
-        }
+                return <span style={{ fontSize: '50px', color: 'grey', lineHeight: '1' }}>N/A</span>;
+        }        
     };
 
     const cardStyle: React.CSSProperties = {
@@ -50,7 +48,7 @@ const Card = (props: CardProperties) => {
                     {props.value}
                 </p>
                 <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    {drawSuit(props.suit, props.color)}
+                    {drawSuit(props.suit)}
                 </div>
                 <p style={{ position: 'absolute', bottom: '10px', right: '10px', margin: 0 }}>
                     {props.value}

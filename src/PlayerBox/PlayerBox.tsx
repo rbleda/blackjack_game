@@ -48,10 +48,9 @@ const PlayerBox = (props: Props) => {
             <div className="player-cards-container">
                 {hand && hand.map((c) => {
                     return <Card 
-                    key={`${c.color}-${c.suit}-${c.value}`} 
+                    key={`$${c.suit}-${c.value}`} 
                     value={c.value} 
                     suit={JSON.parse(c.suit)} 
-                    color={JSON.parse(c.color)} 
                     blankcard={false}/>
                 })}
             </div>
