@@ -19,8 +19,8 @@
 
 .player-cards-container {
     display: flex;
-    flex-wrap: wrap; /* Allows the cards to wrap into new rows */
+    flex-wrap: nowrap; /* Allows the cards to wrap into new rows */
     gap: 10px; /* Adds space between the cards */
     justify-content: center; /* Centers the cards horizontally */
-    max-width: 300px; /* Adjust this to control the width of the container */
+    max-width: auto; /* Adjust this to control the width of the container */
   }
