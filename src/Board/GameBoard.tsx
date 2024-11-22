@@ -21,12 +21,12 @@ const GameBoard = (props: Props) => {
                 </>}
                 {props.gameOutcome === GameOutcome.PLAYER_BJ &&
                     <>
-                        <div className="game-board-title">BLACKJACK BABY!!!</div>
+                        <div className="game-board-title">BLACKJACK! YOU WIN!</div>
                     </>
                 }
                 {props.gameOutcome === GameOutcome.PLAYER_WINS &&
                     <>
-                        <div className="game-board-title">YOU WIN! WoooHooo</div>
+                        <div className="game-board-title">YOU WIN!</div>
                     </>
                 }
                 {props.gameOutcome === GameOutcome.PLAYER_LOSES &&

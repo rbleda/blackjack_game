@@ -2,9 +2,10 @@ import { createContext, ReactNode, useCallback, useContext, useEffect, useState 
 import ICard from "../Card/ICard";
 import { GameResult } from "../Board/GameResult";
 import { GameOutcome } from "../Board/GameOutcome";
+import { calculateGameOutcome } from "./web-socket-utils";
 
 
-interface GameState {
+export interface GameState {
     player: {
       userName: string;
       hand: ICard[];
@@ -55,17 +56,18 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
 
     function setSocketRoutines() {
       if (socket !== null) {
-        socket.onmessage = (event) => {
+        socket.onmessage = async (event) => {
           const { type, state } = JSON.parse(event.data);
-          setGameState(JSON.parse(state));
+          const decodedGameState: GameState = await JSON.parse(state);
+          setGameState(decodedGameState);
           switch (type) {
             case GameResult.NORMAL:
-              console.log("New game state:", JSON.parse(state));
+              console.log("New game state:", decodedGameState);
               break;
             case GameResult.FINAL:
               // Do something I don't know
-              console.log("New final game state:", JSON.parse(state));
-              setFinalGameState(true);
+              console.log("New final game state:", decodedGameState);
+              setGameOutcome(calculateGameOutcome(decodedGameState));
               break;
             case GameResult.PLAYER_BJ:
               setGameOutcome(GameOutcome.PLAYER_BJ);
