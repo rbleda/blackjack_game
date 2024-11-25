@@ -18,6 +18,10 @@ const Gameplay: React.FC = () => {
     sendMessage(JSON.stringify({ action: 'STAND_PLAYER' }));
   };
 
+  const handleNewGame = () => {
+    sendMessage(JSON.stringify({ action: 'RESTART_GAME' }))
+  };
+
   if (!gameState) {
     return (
       <div className="loader-container">
@@ -42,6 +46,7 @@ const Gameplay: React.FC = () => {
             handleStand={handleStand}
             disableButtons={!gameState.playerTurn}
             gameOutcome={gameOutcome}
+            onPlayAgain={handleNewGame}
           />
           <PlayerBox 
             userName={gameState.player.userName} 

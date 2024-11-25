@@ -48,12 +48,6 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
       }
     }, [socket]);
 
-    useEffect(() => {
-      if (finalGameState && gameState != null) {
-
-      }
-    }, [finalGameState])
-
     function setSocketRoutines() {
       if (socket !== null) {
         socket.onmessage = async (event) => {
@@ -63,6 +57,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
           switch (type) {
             case GameResult.NORMAL:
               console.log("New game state:", decodedGameState);
+              setGameOutcome(null);
               break;
             case GameResult.FINAL:
               // Do something I don't know
