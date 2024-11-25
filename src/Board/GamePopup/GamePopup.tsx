@@ -16,13 +16,13 @@ const GamePopup = (props: Props) => {
             setPopupMessage("BLACKJACK! YOU WIN!");
             setPopupBackgroundColor("rgb(3, 175, 26)");
         } else if (props.gameOutcome === GameOutcome.PLAYER_WINS) {
-            setPopupMessage("CONGRATS, YOU WIN!");
+            setPopupMessage("CONGRATS, YOU WON!");
             setPopupBackgroundColor("rgb(85, 145, 93)");
         } else if (props.gameOutcome === GameOutcome.PLAYER_LOSES) {
-            setPopupMessage("SORRY, YOU LOSE.");
+            setPopupMessage("SORRY, YOU LOST.");
             setPopupBackgroundColor("red");
         } else if (props.gameOutcome === GameOutcome.GAME_TIED) {
-            setPopupMessage("NO BLOOD, YOU TIED THE DEALER.");
+            setPopupMessage("YOU TIED THE DEALER.");
             setPopupBackgroundColor("white");
         }
 
