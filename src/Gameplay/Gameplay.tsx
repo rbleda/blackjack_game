@@ -6,9 +6,11 @@ import GameBoard from '../Board/GameBoard';
 import ClipLoader from 'react-spinners/ClipLoader';
 
 import "./Gameplay.css";
+import WelcomePopup from './WelcomePopup/WelcomePopup';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage, gameOutcome } = useGameState();
+  const [ playerUserName, setPlayerUserName ] = useState<string | undefined>();
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -21,6 +23,23 @@ const Gameplay: React.FC = () => {
   const handleNewGame = () => {
     sendMessage(JSON.stringify({ action: 'RESTART_GAME' }))
   };
+
+  const handleStartGame = (playerUN: string) => {
+    sendMessage(JSON.stringify({ action: 'START_GAME', payload: {userName: playerUN} }))
+  };
+
+  const submitUsernameFunc = (username: string) => {
+    setPlayerUserName(username);
+    handleStartGame(username);
+  };
+
+  if (!gameState && !playerUserName) {
+    return (
+      <div>
+        <WelcomePopup onSubmitUsername={submitUsernameFunc}/>
+      </div>
+    )
+  }
 
   if (!gameState) {
     return (

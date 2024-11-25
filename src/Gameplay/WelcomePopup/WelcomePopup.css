@@ -1,0 +1,65 @@
+/* Full-screen overlay to grey out the background */
+.modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Greyed-out background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Modal container for the content */
+.modal-container {
+    background-color: rgb(16, 94, 16);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+/* Title of the modal */
+.modal-title {
+    font-size: 36px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+/* Input box for entering the username */
+.modal-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    text-align: start;
+}
+
+/* Change border color on focus */
+.modal-input:focus {
+    border-color: #333;
+}
+
+/* Button styling for submitting the username */
+.modal-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Button hover effect */
+.modal-button:hover {
+    background-color: #218838;
+}
+  
