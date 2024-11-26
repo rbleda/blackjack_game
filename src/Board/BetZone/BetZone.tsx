@@ -12,9 +12,9 @@ const BetZone = (props: BetProps) => {
                 <span className="bet-number">{"$" + props.playerBet}</span>
             </div>
             <div className="bet-zone-buttons-container">
-                <button className="bet-zone-button" onClick={() => props.onBetNum(20)}>More</button>
-                <button className="bet-zone-button" onClick={() => props.onBetNum(10)}>Bet Min</button>
                 <button className="bet-zone-button" onClick={() => props.onBetNum(5)}>Less</button>
+                <button className="bet-zone-button" onClick={() => props.onBetNum(10)}>Bet Min</button>
+                <button className="bet-zone-button" onClick={() => props.onBetNum(20)}>More</button>
             </div>
         </div>
     )
