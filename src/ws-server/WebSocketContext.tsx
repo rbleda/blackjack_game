@@ -15,6 +15,8 @@ export interface GameState {
       hand: ICard[];
     };
     playerTurn: boolean;
+    playerBank: number;
+    playerBet: number;
 }
 
 interface WebSocketContextType {

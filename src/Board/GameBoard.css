@@ -6,13 +6,21 @@
     border-radius: 50%; /* Oval shape */
     display: flex;
     flex-direction: column; /* Stack elements vertically */
-    justify-content: center; /* Center elements vertically */
+    justify-content: space-between; /* Space elements between top, middle, and bottom */
     align-items: center; /* Center elements horizontally */
     margin: 0 auto; /* Center the board horizontally on the screen */
     position: relative; /* Control over inner elements */
     flex-shrink: 0; /* Prevent shrinking */
+    padding: 20px 0; /* Add some padding to avoid content touching the borders */
 }
-  
+
+.game-board-content-wrapper {
+    display: flex;
+    flex-grow: 1; /* Take up remaining vertical space to center content */
+    align-items: center; /* Center middle content vertically */
+    justify-content: center; /* Center middle content horizontally */
+}
+
 .game-board-content {
     display: flex; /* Align elements (title, buttons) in a row */
     flex-direction: row;

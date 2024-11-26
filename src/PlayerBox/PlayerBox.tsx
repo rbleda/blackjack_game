@@ -9,6 +9,7 @@ interface Props {
     hand: ICard[];
     backgroundColor: string;
     playerTurn: boolean;
+    playerBank?: number;
 }
 
 const PlayerBox = (props: Props) => {
@@ -42,6 +43,10 @@ const PlayerBox = (props: Props) => {
 
     return (
         <div className="player-box-container">
+            {props.playerBank && 
+                <div className="player-bank">
+                    {"$" + props.playerBank}
+                </div>}
             <div className="player-icon" style={iconStyling}>
                 {props.userName}
             </div>

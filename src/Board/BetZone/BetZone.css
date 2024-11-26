@@ -1,0 +1,51 @@
+/* Main container for BetZone */
+.bet-zone-container {
+    position: absolute;
+    bottom: 5vh;                /* 20px from the bottom of the parent container */
+    left: 50%;                   /* Center horizontally */
+    transform: translateX(-50%); /* Align the center properly */
+    display: flex;
+    flex-direction: column;      /* Stack pot and buttons vertically */
+    align-items: center;         /* Center content horizontally */
+    gap: 15px;                   /* Space between pot and button container */
+    padding: 15px;               /* Padding inside the container */
+}
+
+/* Pot container styling */
+.bet-zone-pot-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;        /* Dark background for pot */
+    color: white;                  /* White text color for contrast */
+    font-size: 24px;               /* Larger font for the bet amount */
+    padding: 10px 20px;            /* Padding around the bet amount */
+    border-radius: 8px;            /* Slightly rounded corners */
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+}
+
+/* Buttons container styling */
+.bet-zone-buttons-container {
+    display: flex;                /* Align buttons in a row */
+    flex-direction: row;
+    gap: 10px;                    /* Space between buttons */
+}
+
+/* Individual button styling */
+.bet-zone-button {
+    background-color: #0ece18;    /* Light blue background */
+    color: white;                 /* White text color */
+    border: none;                 /* No border */
+    padding: 10px 15px;           /* Padding around button text */
+    font-size: 14px;              /* Font size for button text */
+    border-radius: 8px;           /* Rounded corners for buttons */
+    cursor: pointer;              /* Pointer cursor on hover */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Hover effect for buttons */
+.bet-zone-button:hover {
+    background-color: #036839;    /* Darker blue on hover */
+    transform: translateY(-3px);  /* Slight lift when hovering */
+}

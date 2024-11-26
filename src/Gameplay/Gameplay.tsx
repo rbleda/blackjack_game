@@ -28,6 +28,10 @@ const Gameplay: React.FC = () => {
     sendMessage(JSON.stringify({ action: 'START_GAME', payload: {userName: playerUN} }))
   };
 
+  const handlePlaceBet = (betAmount: number) => {
+    sendMessage(JSON.stringify({ action: 'PLACE_BET', payload: {amount: betAmount} }))
+  };
+
   const submitUsernameFunc = (username: string) => {
     setPlayerUserName(username);
     handleStartGame(username);
@@ -66,6 +70,9 @@ const Gameplay: React.FC = () => {
             disableButtons={!gameState.playerTurn}
             gameOutcome={gameOutcome}
             onPlayAgain={handleNewGame}
+            onPlaceBet={handlePlaceBet}
+            playerBank={gameState.playerBank}
+            playerBet={gameState.playerBet}
           />
           <PlayerBox 
             userName={gameState.player.userName} 
