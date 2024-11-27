@@ -58,13 +58,13 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
           const decodedGameState: GameState = await JSON.parse(state);
           setGameState(decodedGameState);
           switch (type) {
+            case GameResult.INITIAL:
+              setGameOutcome(GameOutcome.GAME_INITIALIZING);
+              break;
             case GameResult.NORMAL:
-              console.log("New game state:", decodedGameState);
               setGameOutcome(null);
               break;
             case GameResult.FINAL:
-              // Do something I don't know
-              console.log("New final game state:", decodedGameState);
               setGameOutcome(calculateGameOutcome(decodedGameState));
               break;
             case GameResult.PLAYER_BJ:

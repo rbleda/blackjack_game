@@ -20,10 +20,15 @@ interface Props {
 
 const GameBoard = (props: Props) => {
     const [gameOver, setGameOver] = useState<boolean>(false);
+    const [gameIniting, setGameIniting] = useState<boolean>(false);
     const [moneyPot, setMoneyPot] = useState<number>(0);
     
     useEffect(() => {
         if (props.gameOutcome === null) {
+            setGameOver(false);
+            setGameIniting(false);
+        } else if (props.gameOutcome === GameOutcome.GAME_INITIALIZING) {
+            setGameIniting(true);
             setGameOver(false);
         } else {
             setGameOver(true);
@@ -50,10 +55,11 @@ const GameBoard = (props: Props) => {
         if (moneyPot > 0) {
             props.onPlaceBet(moneyPot);
             props.onSubmitDeal();
+            setGameIniting(false);
         }
     };
 
-    if (gameOver && props.gameOutcome !== null) {
+    if (gameOver) {
         return (
             <div className="game-board-table">
                 <>
@@ -76,9 +82,11 @@ const GameBoard = (props: Props) => {
                 </div>
             </div>
             <BetZone 
+                isGameInit={gameIniting}
                 onBetNum={onBetNum} 
                 onSubmitBetAndDeal={onSubmitAndDeal} 
                 playerBet={moneyPot}
+                canDoubleDown={props.canDoubleDown}
             />
         </div>
     )

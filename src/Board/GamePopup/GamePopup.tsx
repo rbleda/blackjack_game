@@ -3,7 +3,7 @@ import { GameOutcome } from "../GameOutcome";
 import "./GamePopup.css";
 
 interface Props {
-    gameOutcome: GameOutcome;
+    gameOutcome: GameOutcome | null;
     onPlayAgain: () => void;
 }
 

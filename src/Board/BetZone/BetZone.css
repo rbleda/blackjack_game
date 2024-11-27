@@ -28,6 +28,8 @@
 .bet-zone-buttons-container {
     display: flex;                /* Align buttons in a row */
     flex-direction: row;
+    align-items: center;
+    justify-content: center;
     gap: 10px;                    /* Space between buttons */
 }
 
