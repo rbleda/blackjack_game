@@ -44,8 +44,28 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
 
+.place-bet-message {
+    color: red;
+    font-weight: bold;
+}
+
+.bet-zone-deal-button {
+    background-color: rgb(224, 193, 18);
+    border-color: black;
+    padding: 10px 15px;           /* Padding around button text */
+    font-size: 14px;              /* Font size for button text */
+    border-radius: 8px;           /* Rounded corners for buttons */
+    transition: background-color 0.3s, transform 0.2s; /* Smooth hover effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    width: 100px;
+}
+
 /* Hover effect for buttons */
 .bet-zone-button:hover {
     background-color: #036839;    /* Darker blue on hover */
     transform: translateY(-3px);  /* Slight lift when hovering */
+}
+
+.bet-zone-deal-button:hover {
+    background-color: rgb(175, 151, 15);    /* Darker blue on hover */
 }

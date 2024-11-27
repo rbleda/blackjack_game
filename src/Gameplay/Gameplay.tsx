@@ -10,7 +10,7 @@ import WelcomePopup from './WelcomePopup/WelcomePopup';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage, gameOutcome } = useGameState();
-  const [ playerUserName, setPlayerUserName ] = useState<string | undefined>();
+  const [gameStarted, setGameStarted] = useState<boolean>(false);
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -21,11 +21,11 @@ const Gameplay: React.FC = () => {
   };
 
   const handleNewGame = () => {
-    sendMessage(JSON.stringify({ action: 'RESTART_GAME' }))
+    sendMessage(JSON.stringify({ action: 'NEW_ROUND' }))
   };
 
-  const handleStartGame = (playerUN: string) => {
-    sendMessage(JSON.stringify({ action: 'START_GAME', payload: {userName: playerUN} }))
+  const handleInitGame = (playerUN: string) => {
+    sendMessage(JSON.stringify({ action: 'INIT_GAME', payload: {userName: playerUN} }))
   };
 
   const handlePlaceBet = (betAmount: number) => {
@@ -33,11 +33,11 @@ const Gameplay: React.FC = () => {
   };
 
   const submitUsernameFunc = (username: string) => {
-    setPlayerUserName(username);
-    handleStartGame(username);
+    handleInitGame(username);
+    setGameStarted(true);
   };
 
-  if (!gameState && !playerUserName) {
+  if (!gameStarted) {
     return (
       <div>
         <WelcomePopup onSubmitUsername={submitUsernameFunc}/>
@@ -68,6 +68,7 @@ const Gameplay: React.FC = () => {
             handleHit={handleHit}
             handleStand={handleStand}
             disableButtons={!gameState.playerTurn}
+            hideButtons={gameState.player.hand.length === 0}
             gameOutcome={gameOutcome}
             onPlayAgain={handleNewGame}
             onPlaceBet={handlePlaceBet}
@@ -79,6 +80,7 @@ const Gameplay: React.FC = () => {
             hand={gameState.player.hand}
             backgroundColor='lightblue'
             playerTurn={gameState.playerTurn}
+            playerBank={gameState.playerBank}
           />
         </div>
       )}

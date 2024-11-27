@@ -24,3 +24,7 @@
     justify-content: center; /* Centers the cards horizontally */
     max-width: auto; /* Adjust this to control the width of the container */
   }
+
+.player-bank {
+    color: white;
+}

@@ -8,6 +8,7 @@ interface Props {
     handleHit: any;
     handleStand: any;
     disableButtons: boolean;
+    hideButtons: boolean;
     gameOutcome: GameOutcome | null;
     onPlayAgain: () => void;  
     onPlaceBet: (betAmount: number) => void;
@@ -34,7 +35,11 @@ const GameBoard = (props: Props) => {
     }, [props.playerBet]);
 
     const onBetNum = (bet: number) => {
-        if (props.playerBank - bet >= 0) {
+        if (moneyPot + bet < 0) {
+            return;
+        }
+
+        if (props.playerBank - (moneyPot + bet) >= 0) {
             const newPotVal = moneyPot + bet;
             setMoneyPot(newPotVal);
         }
@@ -61,12 +66,16 @@ const GameBoard = (props: Props) => {
         <div className="game-board-table">
             <div className="game-board-content-wrapper">
                 <div className="game-board-content">
-                    <button className="game-board-button" onClick={props.handleHit} disabled={props.disableButtons}>Hit</button>
+                    {!props.hideButtons && <button className="game-board-button" onClick={props.handleHit} disabled={props.disableButtons}>Hit</button>}
                     <div className="game-board-title">BLACKJACK</div>
-                    <button className="game-board-button" onClick={props.handleStand} disabled={props.disableButtons}>Stand</button>
+                    {!props.hideButtons && <button className="game-board-button" onClick={props.handleStand} disabled={props.disableButtons}>Stand</button>}
                 </div>
             </div>
-            <BetZone onBetNum={onBetNum} playerBet={moneyPot} />
+            <BetZone 
+                onBetNum={onBetNum} 
+                onSubmitBetAndDeal={submitBetAndDeal} 
+                playerBet={moneyPot}
+            />
         </div>
     )
 }
