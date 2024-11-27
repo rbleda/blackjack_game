@@ -17,6 +17,7 @@ export interface GameState {
     playerTurn: boolean;
     playerBank: number;
     playerBet: number;
+    canDoubleDown: boolean;
 }
 
 interface WebSocketContextType {

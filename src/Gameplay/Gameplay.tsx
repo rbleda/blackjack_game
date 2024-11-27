@@ -11,6 +11,7 @@ import WelcomePopup from './WelcomePopup/WelcomePopup';
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage, gameOutcome } = useGameState();
   const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [roundStarted, setRoundStarted] = useState<boolean>(false);
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -21,21 +22,26 @@ const Gameplay: React.FC = () => {
   };
 
   const handleNewGame = () => {
-    sendMessage(JSON.stringify({ action: 'NEW_ROUND' }))
+    sendMessage(JSON.stringify({ action: 'NEW_ROUND' }));
   };
 
   const handleInitGame = (playerUN: string) => {
-    sendMessage(JSON.stringify({ action: 'INIT_GAME', payload: {userName: playerUN} }))
+    sendMessage(JSON.stringify({ action: 'INIT_GAME', payload: {userName: playerUN} }));
   };
 
   const handlePlaceBet = (betAmount: number) => {
-    sendMessage(JSON.stringify({ action: 'PLACE_BET', payload: {amount: betAmount} }))
+    sendMessage(JSON.stringify({ action: 'PLACE_BET', payload: {amount: betAmount} }));
+  };
+
+  const handleDealRound = () => {
+    sendMessage(JSON.stringify({ action: 'DEAL_ROUND' }));
   };
 
   const submitUsernameFunc = (username: string) => {
     handleInitGame(username);
     setGameStarted(true);
   };
+
 
   if (!gameStarted) {
     return (
@@ -72,8 +78,10 @@ const Gameplay: React.FC = () => {
             gameOutcome={gameOutcome}
             onPlayAgain={handleNewGame}
             onPlaceBet={handlePlaceBet}
+            onSubmitDeal={handleDealRound}
             playerBank={gameState.playerBank}
             playerBet={gameState.playerBet}
+            canDoubleDown={gameState.canDoubleDown}
           />
           <PlayerBox 
             userName={gameState.player.userName} 

@@ -10,10 +10,12 @@ interface Props {
     disableButtons: boolean;
     hideButtons: boolean;
     gameOutcome: GameOutcome | null;
-    onPlayAgain: () => void;  
-    onPlaceBet: (betAmount: number) => void;
+    onPlayAgain: () => void;
+    onPlaceBet: (bet: number) => void;
+    onSubmitDeal: () => void;
     playerBank: number;
     playerBet: number;
+    canDoubleDown: boolean;
 }
 
 const GameBoard = (props: Props) => {
@@ -29,24 +31,26 @@ const GameBoard = (props: Props) => {
     }, [props.gameOutcome]);
 
     useEffect(() => {
-        if (props.playerBet > 0) {
+        if (props.playerBet >= 0) {
             setMoneyPot(props.playerBet);
         }
     }, [props.playerBet]);
 
     const onBetNum = (bet: number) => {
-        if (moneyPot + bet < 0) {
-            return;
+        let newMoneyPot = moneyPot;
+        if (bet < 0 && moneyPot + bet >= 0) {
+            newMoneyPot = moneyPot + bet;
+        } else if (props.playerBank - (moneyPot + bet) >= 0) {
+            newMoneyPot = moneyPot + bet;
         }
-
-        if (props.playerBank - (moneyPot + bet) >= 0) {
-            const newPotVal = moneyPot + bet;
-            setMoneyPot(newPotVal);
-        }
+        setMoneyPot(newMoneyPot);
     };
 
-    const submitBetAndDeal = () => {
-        props.onPlaceBet(moneyPot);
+    const onSubmitAndDeal = () => {
+        if (moneyPot > 0) {
+            props.onPlaceBet(moneyPot);
+            props.onSubmitDeal();
+        }
     };
 
     if (gameOver && props.gameOutcome !== null) {
@@ -73,7 +77,7 @@ const GameBoard = (props: Props) => {
             </div>
             <BetZone 
                 onBetNum={onBetNum} 
-                onSubmitBetAndDeal={submitBetAndDeal} 
+                onSubmitBetAndDeal={onSubmitAndDeal} 
                 playerBet={moneyPot}
             />
         </div>
