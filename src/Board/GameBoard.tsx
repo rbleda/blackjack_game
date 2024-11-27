@@ -40,7 +40,7 @@ const GameBoard = (props: Props) => {
         let newMoneyPot = moneyPot;
         if (bet < 0 && moneyPot + bet >= 0) {
             newMoneyPot = moneyPot + bet;
-        } else if (props.playerBank - (moneyPot + bet) >= 0) {
+        } else if ((moneyPot + bet) >= 0 && props.playerBank - (moneyPot + bet) >= 0) {
             newMoneyPot = moneyPot + bet;
         }
         setMoneyPot(newMoneyPot);
