@@ -37,6 +37,10 @@ const Gameplay: React.FC = () => {
     sendMessage(JSON.stringify({ action: 'DEAL_ROUND' }));
   };
 
+  const handleDoubleDown = () => {
+    sendMessage(JSON.stringify({ action: 'DOUBLE_DOWN' }));
+  }
+
   const submitUsernameFunc = (username: string) => {
     handleInitGame(username);
     setGameStarted(true);
@@ -79,6 +83,7 @@ const Gameplay: React.FC = () => {
             onPlayAgain={handleNewGame}
             onPlaceBet={handlePlaceBet}
             onSubmitDeal={handleDealRound}
+            onDoubleDown={handleDoubleDown}
             playerBank={gameState.playerBank}
             playerBet={gameState.playerBet}
             canDoubleDown={gameState.canDoubleDown}

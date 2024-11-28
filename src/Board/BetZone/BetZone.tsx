@@ -7,6 +7,7 @@ interface BetProps {
     onSubmitBetAndDeal: () => void;
     playerBet: number;
     canDoubleDown: boolean;
+    onDoubleDown: () => void;
 }
 
 const BetZone = (props: BetProps) => {
@@ -49,7 +50,7 @@ const BetZone = (props: BetProps) => {
 
     const clickDoubleDown = () => {
         if (!hasDoubledDown) {
-            props.onBetNum(props.playerBet);
+            props.onDoubleDown();
             setHasDoubledDown(true);
         }
     };

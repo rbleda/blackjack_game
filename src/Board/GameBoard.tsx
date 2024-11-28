@@ -13,6 +13,7 @@ interface Props {
     onPlayAgain: () => void;
     onPlaceBet: (bet: number) => void;
     onSubmitDeal: () => void;
+    onDoubleDown: () => void;
     playerBank: number;
     playerBet: number;
     canDoubleDown: boolean;
@@ -87,6 +88,7 @@ const GameBoard = (props: Props) => {
                 onSubmitBetAndDeal={onSubmitAndDeal} 
                 playerBet={moneyPot}
                 canDoubleDown={props.canDoubleDown}
+                onDoubleDown={props.onDoubleDown}
             />
         </div>
     )
