@@ -7,11 +7,12 @@ import ClipLoader from 'react-spinners/ClipLoader';
 
 import "./Gameplay.css";
 import WelcomePopup from './WelcomePopup/WelcomePopup';
+import { GameOutcome } from '../Board/GameOutcome';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage, gameOutcome } = useGameState();
   const [gameStarted, setGameStarted] = useState<boolean>(false);
-  const [roundStarted, setRoundStarted] = useState<boolean>(false);
+  const [isGameSpinning, setIsGameSpinning] = useState<boolean>(false);
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -22,7 +23,19 @@ const Gameplay: React.FC = () => {
   };
 
   const handleNewGame = () => {
-    sendMessage(JSON.stringify({ action: 'NEW_ROUND' }));
+    if (gameOutcome === GameOutcome.PLAYER_BJ || gameOutcome === GameOutcome.PLAYER_WINS)  {
+      sendMessage(JSON.stringify({ action: 'PAY_PLAYER_POT' }));
+    } else if (gameOutcome === GameOutcome.PLAYER_LOSES) {
+      sendMessage(JSON.stringify({ action: 'REMOVE_POT' }));
+    } else if (gameOutcome === GameOutcome.GAME_TIED ) {
+      sendMessage(JSON.stringify({ action: 'RETURN_PLAYER_BET' }));
+    }
+
+    setIsGameSpinning(true);
+    setTimeout(() => {
+      sendMessage(JSON.stringify({ action: 'NEW_ROUND' }));
+      setIsGameSpinning(false);
+    }, 1000);
   };
 
   const handleInitGame = (playerUN: string) => {
@@ -55,7 +68,9 @@ const Gameplay: React.FC = () => {
     )
   }
 
-  if (!gameState) {
+  if (!gameState || isGameSpinning) {
+    // Need to add functionality here with Spinner class
+    // So that the message and color and stuff are different, based on what is happening
     return (
       <div className="loader-container">
         <ClipLoader color={'#3498db'} size={150} />
