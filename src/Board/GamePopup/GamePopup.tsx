@@ -36,7 +36,7 @@ const GamePopup = (props: Props) => {
             moneyColor: "darkRed"
         }
         const evenMoneyMessage = { 
-            firstLineMoney: "+ $0",
+            firstLineMoney: "+/- $0",
             secondLineBank: "Current Bank Value: $" + (props.playerBank + props.playerBet),
             moneyColor: "black"
         }
