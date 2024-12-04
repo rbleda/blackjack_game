@@ -8,6 +8,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import "./Gameplay.css";
 import WelcomePopup from './WelcomePopup/WelcomePopup';
 import { GameOutcome } from '../Board/GameOutcome';
+import Spinner from '../UI/Spinner';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage, gameOutcome } = useGameState();
@@ -68,13 +69,22 @@ const Gameplay: React.FC = () => {
     )
   }
 
-  if (!gameState || isGameSpinning) {
-    // Need to add functionality here with Spinner class
-    // So that the message and color and stuff are different, based on what is happening
+  if (!gameState) {
+    const message = "Establishing connection...";
     return (
-      <div className="loader-container">
-        <ClipLoader color={'#3498db'} size={150} />
-        <h2>Establishing connection...</h2>
+      <div>
+        <Spinner message={message}/>
+      </div>
+    )
+  } else if (isGameSpinning) {
+    const message = "Dealing New Game...";
+    const color = "gold";
+    return (
+      <div>
+        <Spinner 
+          message={message}
+          color={color}
+        />
       </div>
     )
   }
