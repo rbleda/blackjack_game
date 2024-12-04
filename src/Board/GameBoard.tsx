@@ -67,6 +67,8 @@ const GameBoard = (props: Props) => {
                     <GamePopup 
                         gameOutcome={props.gameOutcome}
                         onPlayAgain={props.onPlayAgain}
+                        playerBank={props.playerBank}
+                        playerBet={props.playerBet}
                     />
                 </>
             </div>

@@ -77,7 +77,7 @@ const Gameplay: React.FC = () => {
       </div>
     )
   } else if (isGameSpinning) {
-    const message = "Dealing New Game...";
+    const message = "Setting Up New Round...";
     const color = "gold";
     return (
       <div>
