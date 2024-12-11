@@ -9,6 +9,7 @@
     align-items: center;         /* Center content horizontally */
     gap: 15px;                   /* Space between pot and button container */
     padding: 15px;               /* Padding inside the container */
+    min-height: 100px;
 }
 
 /* Pot container styling */
