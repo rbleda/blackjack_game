@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./BetZone.css";
+import MoneyPile from "../MoneyPile/MoneyPile";
 
 interface BetProps {
     isGameInit: boolean;
@@ -59,7 +60,8 @@ const BetZone = (props: BetProps) => {
         <div className="bet-zone-container">
             {returnDealOrNoDeal()}
             <div className="bet-zone-pot-container">
-                <span className="bet-number">{"$" + props.playerBet}</span>
+                {/* <span className="bet-number">{"$" + props.playerBet}</span> */}
+                <MoneyPile amount={props.playerBet}/>
             </div>
             {returnBetZoneButtonsContainer()}
         </div>
