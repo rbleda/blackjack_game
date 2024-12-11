@@ -98,6 +98,7 @@ const Gameplay: React.FC = () => {
             hand={gameState.dealer.hand}
             backgroundColor='red'
             playerTurn={gameState.playerTurn}
+            gameOutcome={gameOutcome}
           />
           <GameBoard 
             handleHit={handleHit}
@@ -119,6 +120,7 @@ const Gameplay: React.FC = () => {
             backgroundColor='lightblue'
             playerTurn={gameState.playerTurn}
             playerBank={gameState.playerBank}
+            gameOutcome={gameOutcome}
           />
         </div>
       )}

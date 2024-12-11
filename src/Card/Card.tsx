@@ -33,11 +33,10 @@ const Card = (props: CardProperties) => {
         margin: '5px'
     };
 
-    if (props?.blankcard) {
+    if (props?.blankcard === true) {
         return (
             <div style={cardStyle}>
                 <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                    ?
                 </div>
             </div>
         );

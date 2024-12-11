@@ -3,6 +3,7 @@ import ICard from "../Card/ICard";
 import Card from "../Card/Card";
 
 import "./PlayerBox.css";
+import { GameOutcome } from "../Board/GameOutcome";
 
 interface Props {
     userName: string;
@@ -10,11 +11,13 @@ interface Props {
     backgroundColor: string;
     playerTurn: boolean;
     playerBank?: number;
+    gameOutcome: GameOutcome | null;
 }
 
 const PlayerBox = (props: Props) => {
     const [hand, setHand] = useState(props.hand);
     const [iconStyling, setIconStyling] = useState({backgroundColor: props.backgroundColor});
+    const gameOverOutcomes = [GameOutcome.PLAYER_WINS, GameOutcome.PLAYER_LOSES, GameOutcome.GAME_TIED];
 
     useEffect(() => {
         setHand(props.hand);
@@ -52,11 +55,19 @@ const PlayerBox = (props: Props) => {
             </div>
             <div className="player-cards-container">
                 {hand && hand.map((c) => {
-                    return <Card 
-                    key={`$${c.suit}-${c.value}`} 
-                    value={c.value} 
-                    suit={JSON.parse(c.suit)} 
-                    blankcard={false}/>
+                    if (props.gameOutcome !== null && gameOverOutcomes.includes(props.gameOutcome)) {
+                        return <Card 
+                            key={`$${c.suit}-${c.value}`} 
+                            value={c.value} 
+                            suit={JSON.parse(c.suit)} 
+                            blankcard={false}/>
+                    } else {
+                        return <Card 
+                            key={`$${c.suit}-${c.value}`} 
+                            value={c.value} 
+                            suit={JSON.parse(c.suit)} 
+                            blankcard={JSON.parse(c.upsideDown)}/>
+                    }
                 })}
             </div>
         </div>
