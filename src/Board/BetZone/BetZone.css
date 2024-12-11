@@ -47,8 +47,9 @@
 }
 
 .place-bet-message {
-    color: red;
+    color: rgb(252, 26, 26);
     font-weight: bold;
+    font-size: 18px;
 }
 
 .bet-zone-deal-button {
