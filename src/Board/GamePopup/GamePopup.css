@@ -30,4 +30,8 @@
     background-color: rgb(218, 193, 51);
     color: white;
 }
+
+.button:hover {
+    background-color: rgb(133, 117, 30);
+}
   

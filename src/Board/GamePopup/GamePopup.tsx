@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { GameOutcome } from "../GameOutcome";
 import "./GamePopup.css";
+import { refreshEntireGame } from "../../Gameplay/game-play";
+import { JSX } from "react/jsx-runtime";
 
 interface Props {
     gameOutcome: GameOutcome | null;
@@ -23,8 +25,13 @@ const GamePopup = (props: Props) => {
         secondLineBank: "", 
         moneyColor: "white"
     });
+    const [playerZeroedOut, setPlayerZeroedOut] = useState<boolean>(false);
 
     useEffect(() => {
+        if (props.gameOutcome === GameOutcome.PLAYER_LOSES && props.playerBank === 0) {
+            setPlayerZeroedOut(true);
+            return;
+        }
         const winningMoneyMessage = { 
             firstLineMoney: "+ $" + props.playerBet,
             secondLineBank: "New Bank Value: $" + (props.playerBank + (props.playerBet * 2)),
@@ -59,6 +66,18 @@ const GamePopup = (props: Props) => {
         }
 
     }, [props.gameOutcome]);
+
+    if (playerZeroedOut) {
+        return (
+            <div className="modal-overlay">
+                <div className="modal-content" style={{ background: "#c70909" }}>
+                    <h1>GAME OVER</h1>
+                    <h4 style={{ fontStyle: "italic" }}>Blackjack giveth, and blackjack taketh away.</h4>
+                    <button className="button" onClick={refreshEntireGame} style={{ margin: "0px"}}>Quit</button>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="modal-overlay">

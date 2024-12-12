@@ -60,8 +60,8 @@ const BetZone = (props: BetProps) => {
         <div className="bet-zone-container">
             {returnDealOrNoDeal()}
             <div className="bet-zone-pot-container">
-                {/* <span className="bet-number">{"$" + props.playerBet}</span> */}
-                <MoneyPile amount={props.playerBet}/>
+                <span className="bet-number">{"$" + props.playerBet}</span>
+                {/* <MoneyPile amount={props.playerBet}/> */}
             </div>
             {returnBetZoneButtonsContainer()}
         </div>

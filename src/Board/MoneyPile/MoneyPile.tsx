@@ -4,6 +4,8 @@ interface MoneyPileProps {
     amount: number;
 }
 
+// This component is unfinished
+// Needs more development in terms of rendering the stack correctly
 const MoneyPile: React.FC<MoneyPileProps> = (props: MoneyPileProps) => {
     // Define a map of chip values to colors
     const stackColorMap = new Map<number, string>([
@@ -42,7 +44,6 @@ const MoneyPile: React.FC<MoneyPileProps> = (props: MoneyPileProps) => {
                 >
                     {chipValue}
                 </div>
-                <span>x {count}</span>
             </div>
         );
     };

@@ -15,7 +15,8 @@
 /* Pot container styling */
 .bet-zone-pot-container {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: start;
     align-items: center;
     background-color: #333;        /* Dark background for pot */
     color: white;                  /* White text color for contrast */
