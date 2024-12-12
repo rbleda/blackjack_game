@@ -34,7 +34,7 @@
 .modal-input {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 18px;
     border: 2px solid #ccc;
     border-radius: 5px;
@@ -52,7 +52,7 @@
     padding: 10px 20px;
     font-size: 18px;
     background-color: #28a745;
-    color: white;
+    color: black;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -61,5 +61,10 @@
 /* Button hover effect */
 .modal-button:hover {
     background-color: #218838;
+}
+
+.reminder-message {
+    color: orangered;
+    margin-bottom: 10px;
 }
   

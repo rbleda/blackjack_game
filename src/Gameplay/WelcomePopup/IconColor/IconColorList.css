@@ -1,0 +1,27 @@
+.component-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.choose-icon-message {
+    margin: 10px;
+    font-size: large;
+}
+
+.color-options-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 20px;
+}
+
+.color-option {
+    height: 50px;
+    width: 50px;
+    border: 3px solid;
+    border-radius: 50%; 
+}

@@ -1,12 +1,15 @@
 import { useState } from "react";
 import "./WelcomePopup.css";
+import IconColorList from "./IconColor/IconColorList";
 
 interface WelcomePopupProps {
     onSubmitUsername: (username: string) => void;
+    setPlayerIconColor: any;
 }
 
 const WelcomePopup = (props: WelcomePopupProps) => {
     const [username, setUsername] = useState('');
+    const [reminderMessage, setReminderMessage] = useState('');
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
@@ -15,6 +18,8 @@ const WelcomePopup = (props: WelcomePopupProps) => {
     const handleSubmit = () => {
       if (username.trim()) {
         props.onSubmitUsername(username);
+      } else {
+        setReminderMessage("Enter a username to begin");
       }
     };
   
@@ -29,6 +34,10 @@ const WelcomePopup = (props: WelcomePopupProps) => {
             value={username}
             onChange={handleUsernameChange}
           />
+          <IconColorList setPlayerIconColor={props.setPlayerIconColor}/>
+          {!username && (
+            <div className="reminder-message">{reminderMessage}</div>
+          )}
           <button className="modal-button" onClick={handleSubmit}>
             Start Game
           </button>

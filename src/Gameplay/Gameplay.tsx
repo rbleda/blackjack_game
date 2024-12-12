@@ -7,11 +7,13 @@ import "./Gameplay.css";
 import WelcomePopup from './WelcomePopup/WelcomePopup';
 import { GameOutcome } from '../Board/GameOutcome';
 import Spinner from '../UI/Spinner';
+import { IconColor } from './WelcomePopup/IconColor/IconColor';
 
 const Gameplay: React.FC = () => {
   const { gameState, sendMessage, gameOutcome } = useGameState();
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [isGameSpinning, setIsGameSpinning] = useState<boolean>(false);
+  const [playerIconColor, setPlayerIconColor] = useState<IconColor>(IconColor.BLUE);
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -62,7 +64,7 @@ const Gameplay: React.FC = () => {
   if (!gameStarted) {
     return (
       <div>
-        <WelcomePopup onSubmitUsername={submitUsernameFunc}/>
+        <WelcomePopup onSubmitUsername={submitUsernameFunc} setPlayerIconColor={setPlayerIconColor}/>
       </div>
     )
   }
@@ -115,7 +117,7 @@ const Gameplay: React.FC = () => {
           <PlayerBox 
             userName={gameState.player.userName} 
             hand={gameState.player.hand}
-            backgroundColor='lightblue'
+            backgroundColor={playerIconColor}
             playerTurn={gameState.playerTurn}
             playerBank={gameState.playerBank}
             gameOutcome={gameOutcome}
