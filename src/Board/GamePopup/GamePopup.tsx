@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { GameOutcome } from "../GameOutcome";
 import "./GamePopup.css";
 import { refreshEntireGame } from "../../Gameplay/game-play";
-import { JSX } from "react/jsx-runtime";
 
 interface Props {
     gameOutcome: GameOutcome | null;
@@ -65,7 +64,7 @@ const GamePopup = (props: Props) => {
             setMoneyResultMessage(evenMoneyMessage);
         }
 
-    }, [props.gameOutcome]);
+    }, [props.gameOutcome, props.playerBank, props.playerBet]);
 
     if (playerZeroedOut) {
         return (

@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useGameState } from '../ws-server/WebSocketContext';
 import PlayerBox from '../PlayerBox/PlayerBox';
 import GameBoard from '../Board/GameBoard';
-
-import ClipLoader from 'react-spinners/ClipLoader';
 
 import "./Gameplay.css";
 import WelcomePopup from './WelcomePopup/WelcomePopup';
