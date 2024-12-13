@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./WelcomePopup.css";
 import IconColorList from "./IconColor/IconColorList";
+import { useDispatch } from "react-redux";
+import { setPlayerUsername } from "../../redux/store";
 
 interface WelcomePopupProps {
     onSubmitUsername: (username: string) => void;
@@ -10,6 +12,7 @@ interface WelcomePopupProps {
 const WelcomePopup = (props: WelcomePopupProps) => {
     const [username, setUsername] = useState('');
     const [reminderMessage, setReminderMessage] = useState('');
+    const dispatch = useDispatch();
 
     const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       setUsername(e.target.value);
@@ -17,6 +20,7 @@ const WelcomePopup = (props: WelcomePopupProps) => {
   
     const handleSubmit = () => {
       if (username.trim()) {
+        dispatch(setPlayerUsername(username));
         props.onSubmitUsername(username);
       } else {
         setReminderMessage("Enter a username to begin");

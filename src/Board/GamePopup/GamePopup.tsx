@@ -2,12 +2,11 @@ import { useEffect, useState } from "react";
 import { GameOutcome } from "../GameOutcome";
 import "./GamePopup.css";
 import { refreshEntireGame } from "../../Gameplay/game-play";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 interface Props {
-    gameOutcome: GameOutcome | null;
     onPlayAgain: () => void;
-    playerBank: number;
-    playerBet: number;
 }
 
 interface IPopupMessage {
@@ -25,46 +24,48 @@ const GamePopup = (props: Props) => {
         moneyColor: "white"
     });
     const [playerZeroedOut, setPlayerZeroedOut] = useState<boolean>(false);
+    const gameOutcome = useSelector((state: RootState) => state.game.gameOutcome);
+    const { playerBank, playerBet } = useSelector((state: RootState) => state.player);
 
     useEffect(() => {
-        if (props.gameOutcome === GameOutcome.PLAYER_LOSES && props.playerBank === 0) {
+        if (gameOutcome === GameOutcome.PLAYER_LOSES && playerBank === 0) {
             setPlayerZeroedOut(true);
             return;
         }
         const winningMoneyMessage = { 
-            firstLineMoney: "+ $" + props.playerBet,
-            secondLineBank: "New Bank Value: $" + (props.playerBank + (props.playerBet * 2)),
+            firstLineMoney: "+ $" + playerBet,
+            secondLineBank: "New Bank Value: $" + (playerBank + (playerBet * 2)),
             moneyColor: "lightGreen"
         }
         const losingMoneyMessage = { 
-            firstLineMoney: "- $" + props.playerBet,
-            secondLineBank: "New Bank Value: $" + props.playerBank,
+            firstLineMoney: "- $" + playerBet,
+            secondLineBank: "New Bank Value: $" + playerBank,
             moneyColor: "darkRed"
         }
         const evenMoneyMessage = { 
             firstLineMoney: "+/- $0",
-            secondLineBank: "Current Bank Value: $" + (props.playerBank + props.playerBet),
+            secondLineBank: "Current Bank Value: $" + (playerBank + playerBet),
             moneyColor: "black"
         }
-        if (props.gameOutcome === GameOutcome.PLAYER_BJ) {
+        if (gameOutcome === GameOutcome.PLAYER_BJ) {
             setPopupMessage("BLACKJACK! YOU WIN!");
             setPopupBackgroundColor("rgb(3, 175, 26)");
             setMoneyResultMessage(winningMoneyMessage);
-        } else if (props.gameOutcome === GameOutcome.PLAYER_WINS) {
+        } else if (gameOutcome === GameOutcome.PLAYER_WINS) {
             setPopupMessage("CONGRATS, YOU WON!");
             setPopupBackgroundColor("rgb(85, 145, 93)");
             setMoneyResultMessage(winningMoneyMessage);
-        } else if (props.gameOutcome === GameOutcome.PLAYER_LOSES) {
+        } else if (gameOutcome === GameOutcome.PLAYER_LOSES) {
             setPopupMessage("SORRY, YOU LOST.");
             setPopupBackgroundColor("red");
             setMoneyResultMessage(losingMoneyMessage);
-        } else if (props.gameOutcome === GameOutcome.GAME_TIED) {
+        } else if (gameOutcome === GameOutcome.GAME_TIED) {
             setPopupMessage("YOU TIED THE DEALER.");
             setPopupBackgroundColor("lightgrey");
             setMoneyResultMessage(evenMoneyMessage);
         }
 
-    }, [props.gameOutcome, props.playerBank, props.playerBet]);
+    }, [gameOutcome, playerBank, playerBet]);
 
     if (playerZeroedOut) {
         return (

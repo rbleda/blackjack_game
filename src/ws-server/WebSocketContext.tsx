@@ -3,6 +3,8 @@ import ICard from "../Card/ICard";
 import { GameResult } from "../Board/GameResult";
 import { GameOutcome } from "../Board/GameOutcome";
 import { calculateGameOutcome } from "./web-socket-utils";
+import { useDispatch } from "react-redux";
+import { setGameOutcome, setPlayerBank, setPlayerBet } from "../redux/store";
 
 
 export interface GameState {
@@ -23,7 +25,6 @@ export interface GameState {
 interface WebSocketContextType {
     gameState: GameState | null;
     sendMessage: (message: string) => void;
-    gameOutcome: GameOutcome | null; 
 }
 
 const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
@@ -35,8 +36,7 @@ interface WebSocketProviderProps {
 export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }) => {
     const [gameState, setGameState] = useState<GameState | null>(null);
     const [socket, setSocket] = useState<WebSocket | null>(null);
-    const [finalGameState, setFinalGameState] = useState<boolean>(false);
-    const [gameOutcome, setGameOutcome] = useState<GameOutcome | null>(null);
+    const dispatch = useDispatch();
 
     // Utility function to create a delay (promisified setTimeout)
     const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -59,30 +59,35 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
           setGameState(decodedGameState);
           switch (type) {
             case GameResult.INITIAL:
-              setGameOutcome(GameOutcome.GAME_INITIALIZING);
+              dispatch(setGameOutcome(GameOutcome.GAME_INITIALIZING));
               break;
             case GameResult.NORMAL:
-              setGameOutcome(null);
+              dispatch(setGameOutcome(null));
               break;
             case GameResult.FINAL:
-              setGameOutcome(calculateGameOutcome(decodedGameState));
+              dispatch(setGameOutcome(calculateGameOutcome(decodedGameState)));
               break;
             case GameResult.PLAYER_BJ:
-              setGameOutcome(GameOutcome.PLAYER_BJ);
+              dispatch(setGameOutcome(GameOutcome.PLAYER_BJ));
               break;
             case GameResult.PLAYER_BUST:
-              setGameOutcome(GameOutcome.PLAYER_LOSES);
+              dispatch(setGameOutcome(GameOutcome.PLAYER_LOSES));
               break;
             case GameResult.DEALER_BJ:
-              setGameOutcome(GameOutcome.PLAYER_LOSES);
+              dispatch(setGameOutcome(GameOutcome.PLAYER_LOSES));
               break;
             case GameResult.DEALER_BUST:
-              setGameOutcome(GameOutcome.PLAYER_WINS);
+              dispatch(setGameOutcome(GameOutcome.PLAYER_WINS));
               break;
             default:
               break;
           }
         };
+
+        if (gameState?.playerBank && gameState?.playerBet) {
+          dispatch(setPlayerBank(gameState.playerBank));
+          dispatch(setPlayerBet(gameState.playerBet));
+        }
       }
     }
 
@@ -125,7 +130,7 @@ export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({ children }
     );
   
     return (
-      <WebSocketContext.Provider value={{ gameState, sendMessage, gameOutcome }}>
+      <WebSocketContext.Provider value={{ gameState, sendMessage }}>
         {children}
       </WebSocketContext.Provider>
     );

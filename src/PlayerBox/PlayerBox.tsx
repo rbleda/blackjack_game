@@ -4,19 +4,21 @@ import Card from "../Card/Card";
 
 import "./PlayerBox.css";
 import { GameOutcome } from "../Board/GameOutcome";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface Props {
-    userName: string;
     hand: ICard[];
-    backgroundColor: string;
+    backgroundColor?: string;
     playerTurn: boolean;
-    playerBank?: number;
-    gameOutcome: GameOutcome | null;
+    isDealer: boolean;
 }
 
 const PlayerBox = (props: Props) => {
     const [hand, setHand] = useState(props.hand);
     const [iconStyling, setIconStyling] = useState({backgroundColor: props.backgroundColor});
+    const gameOutcome = useSelector((state: RootState) => state.game.gameOutcome);
+    const player = useSelector((state: RootState) => state.player);
     const gameOverOutcomes = [GameOutcome.PLAYER_WINS, GameOutcome.PLAYER_LOSES, GameOutcome.GAME_TIED];
 
     useEffect(() => {
@@ -24,11 +26,11 @@ const PlayerBox = (props: Props) => {
     }, [props.hand]);
 
     useEffect(() => {
-        if (props.playerTurn && props.userName !== "Dealer") {
+        if (props.playerTurn && player.username !== "Dealer") {
             setTurnStyling('gold');
-        } else if (!props.playerTurn && props.userName !== "Dealer") {
+        } else if (!props.playerTurn && player.username !== "Dealer") {
             setTurnStyling('black');
-        } else if (!props.playerTurn && props.userName === "Dealer") {
+        } else if (!props.playerTurn && player.username === "Dealer") {
             setTurnStyling('gold');
         } else {
             setTurnStyling('black');
@@ -37,7 +39,7 @@ const PlayerBox = (props: Props) => {
 
     const setTurnStyling = (color: string) => {
         const newStyling = {
-            backgroundColor: props.backgroundColor,
+            backgroundColor: props.backgroundColor && !props.isDealer ? props.backgroundColor : 'red',
             borderColor: color
         }
 
@@ -46,16 +48,16 @@ const PlayerBox = (props: Props) => {
 
     return (
         <div className="player-box-container">
-            {props.playerBank && 
+            {!props.isDealer && 
                 <div className="player-bank">
-                    {"$" + props.playerBank}
+                    {"$" + player.playerBank}
                 </div>}
             <div className="player-icon" style={iconStyling}>
-                {props.userName}
+                {!props.isDealer ? player.username : "Dealer"}
             </div>
             <div className="player-cards-container">
                 {hand && hand.map((c) => {
-                    if (props.gameOutcome !== null && gameOverOutcomes.includes(props.gameOutcome)) {
+                    if (gameOutcome !== null && gameOverOutcomes.includes(gameOutcome)) {
                         return <Card 
                             key={`$${c.suit}-${c.value}`} 
                             value={c.value} 

@@ -8,12 +8,15 @@ import WelcomePopup from './WelcomePopup/WelcomePopup';
 import { GameOutcome } from '../Board/GameOutcome';
 import Spinner from '../UI/Spinner';
 import { IconColor } from './WelcomePopup/IconColor/IconColor';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 
 const Gameplay: React.FC = () => {
-  const { gameState, sendMessage, gameOutcome } = useGameState();
+  const { gameState, sendMessage } = useGameState();
   const [gameStarted, setGameStarted] = useState<boolean>(false);
   const [isGameSpinning, setIsGameSpinning] = useState<boolean>(false);
   const [playerIconColor, setPlayerIconColor] = useState<IconColor>(IconColor.BLUE);
+  const gameOutcome = useSelector((state: RootState) => state.game.gameOutcome);
 
   const handleHit = () => {
     sendMessage(JSON.stringify({ action: 'HIT_PLAYER' }));
@@ -94,33 +97,26 @@ const Gameplay: React.FC = () => {
       {gameState && (
         <div className="game-setup">
           <PlayerBox 
-            userName={gameState.dealer.userName} 
             hand={gameState.dealer.hand}
-            backgroundColor='red'
             playerTurn={gameState.playerTurn}
-            gameOutcome={gameOutcome}
+            isDealer={true}
           />
           <GameBoard 
             handleHit={handleHit}
             handleStand={handleStand}
             disableButtons={!gameState.playerTurn}
             hideButtons={gameState.player.hand.length === 0}
-            gameOutcome={gameOutcome}
             onPlayAgain={handleNewGame}
             onPlaceBet={handlePlaceBet}
             onSubmitDeal={handleDealRound}
             onDoubleDown={handleDoubleDown}
-            playerBank={gameState.playerBank}
-            playerBet={gameState.playerBet}
             canDoubleDown={gameState.canDoubleDown}
           />
           <PlayerBox 
-            userName={gameState.player.userName} 
             hand={gameState.player.hand}
             backgroundColor={playerIconColor}
             playerTurn={gameState.playerTurn}
-            playerBank={gameState.playerBank}
-            gameOutcome={gameOutcome}
+            isDealer={false}
           />
         </div>
       )}

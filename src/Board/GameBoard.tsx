@@ -3,19 +3,18 @@ import "./GameBoard.css";
 import { GameOutcome } from "./GameOutcome";
 import GamePopup from "./GamePopup/GamePopup";
 import BetZone from "./BetZone/BetZone";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
 
 interface Props {
     handleHit: any;
     handleStand: any;
     disableButtons: boolean;
     hideButtons: boolean;
-    gameOutcome: GameOutcome | null;
     onPlayAgain: () => void;
     onPlaceBet: (bet: number) => void;
     onSubmitDeal: () => void;
     onDoubleDown: () => void;
-    playerBank: number;
-    playerBet: number;
     canDoubleDown: boolean;
 }
 
@@ -23,30 +22,32 @@ const GameBoard = (props: Props) => {
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [gameIniting, setGameIniting] = useState<boolean>(false);
     const [moneyPot, setMoneyPot] = useState<number>(0);
+    const gameOutcome = useSelector((state: RootState) => state.game.gameOutcome);
+    const { playerBank, playerBet } = useSelector((state: RootState) => state.player);
     
     useEffect(() => {
-        if (props.gameOutcome === null) {
+        if (gameOutcome === null) {
             setGameOver(false);
             setGameIniting(false);
-        } else if (props.gameOutcome === GameOutcome.GAME_INITIALIZING) {
+        } else if (gameOutcome === GameOutcome.GAME_INITIALIZING) {
             setGameIniting(true);
             setGameOver(false);
         } else {
             setGameOver(true);
         }
-    }, [props.gameOutcome]);
+    }, [gameOutcome]);
 
     useEffect(() => {
-        if (props.playerBet >= 0) {
-            setMoneyPot(props.playerBet);
+        if (playerBet >= 0) {
+            setMoneyPot(playerBet);
         }
-    }, [props.playerBet]);
+    }, [playerBet]);
 
     const onBetNum = (bet: number) => {
         let newMoneyPot = moneyPot;
         if (bet < 0 && moneyPot + bet >= 0) {
             newMoneyPot = moneyPot + bet;
-        } else if ((moneyPot + bet) >= 0 && props.playerBank - (moneyPot + bet) >= 0) {
+        } else if ((moneyPot + bet) >= 0 && playerBank - (moneyPot + bet) >= 0) {
             newMoneyPot = moneyPot + bet;
         }
         setMoneyPot(newMoneyPot);
@@ -63,14 +64,7 @@ const GameBoard = (props: Props) => {
     if (gameOver) {
         return (
             <div className="game-board-table">
-                <>
-                    <GamePopup 
-                        gameOutcome={props.gameOutcome}
-                        onPlayAgain={props.onPlayAgain}
-                        playerBank={props.playerBank}
-                        playerBet={props.playerBet}
-                    />
-                </>
+                <GamePopup onPlayAgain={props.onPlayAgain}/>
             </div>
         )
     }
